@@ -123,7 +123,11 @@ function ModalCheckout({ handleCloseModal }) {
       toast.success(
         'El pago está siendo procesado. Te enviaremos un correo cuando se haya confirmado',
       );
+
+      localStorage.removeItem('productsCart');
       handleCloseModal();
+    } else {
+      toast.error('Ha ocurrido un error al procesar el pago');
     }
 
     setLoading(false);
