@@ -1,18 +1,42 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Rating,
-  Select,
-} from '@mui/material';
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Rating } from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useSelector } from 'react-redux';
+import { onFormatCurrencyColombian } from '../../utils/handleNumbers';
 
-export function ItemProduct({ product }) {
+export function ItemProduct({
+  product,
+  addNewProduct,
+  addNewFavorite,
+  remoteItemFavorites,
+}) {
+  /* Selectores */
+  const itemsCart = useSelector((state) => state.init.itemsCart);
+  const favorites = useSelector((state) => state.init.favorites);
+
+  /* Validations */
+  const isSelectedItem = itemsCart.includes(product.id);
+  const isFavoriteItem = favorites.includes(product.id);
+
   return (
     <div className="relative ">
+      {/* Favorite icon */}
+      {isFavoriteItem && (
+        <div className="w-[40px] h-[40px] absolute top-0 right-0 flex justify-center items-center">
+          <FavoriteIcon
+            sx={{
+              color: '#ef4444 ',
+            }}
+          />
+        </div>
+      )}
+
       {/* Imagen de producto */}
       <img
         alt={product.imageAlt}
-        src={product.imageSrc}
+        src={`/public/images/${product.imageSrc}`}
         className="aspect-square w-full rounded-md bg-gray-200 lg:aspect-auto lg:h-[250px]"
         style={{
           objectFit: 'cover',
@@ -51,7 +75,7 @@ export function ItemProduct({ product }) {
               fontSize: '16px',
             }}
           >
-            {product.price}
+            {onFormatCurrencyColombian(product.price)}
           </p>
           <p
             className="text-lg text-gray-900 mt-2"
@@ -68,36 +92,42 @@ export function ItemProduct({ product }) {
         </div>
       </div>
       <div className="flex justify-between items-center gap-x-5 mt-5">
+        {isSelectedItem ? (
+          <div
+            className="w-[80%] h-[40px] rounded-md bg-green-100 text-green-900 font-semibold transition-colors duration-200 ease-in-out flex items-center gap-x-4 justify-center"
+            style={{
+              letterSpacing: '0.8px',
+              fontSize: '14px',
+            }}
+          >
+            Producto en el carrito <CheckCircleOutlineIcon />
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="w-[80%] h-[40px] rounded-md bg-gray-100 hover:bg-gray-200 cursor-pointer text-gray-900 font-semibold transition-colors duration-200 ease-in-out flex items-center gap-x-4 justify-center"
+            style={{
+              letterSpacing: '0.8px',
+              fontSize: '14px',
+            }}
+            onClick={() => addNewProduct(product.id)}
+          >
+            Agregar al carrito
+          </button>
+        )}
         <button
           type="button"
-          className="w-[60%] h-[40px] rounded-md bg-gray-100 hover:bg-gray-200 cursor-pointer text-gray-900 font-semibold transition-colors duration-200 ease-in-out flex items-center gap-x-4 justify-center"
-          style={{
-            letterSpacing: '0.8px',
-            fontSize: '14px',
+          className="w-[20%] h-[40px] rounded-md bg-gray-100 hover:bg-gray-200 cursor-pointer  font-semibold transition-colors duration-200 ease-in-out flex items-center gap-x-4 justify-center"
+          onClick={() => {
+            if (isFavoriteItem) {
+              remoteItemFavorites(product.id);
+              return;
+            }
+            addNewFavorite(product.id);
           }}
         >
-          Agregar al carrito
+          {isFavoriteItem ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </button>
-        <div className="w-[40%] h-[40px]">
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Unidades</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={1}
-              label="Unidades"
-              onChange={() => {}}
-              size="small"
-              sx={{
-                width: '100%',
-              }}
-            >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
       </div>
     </div>
   );
