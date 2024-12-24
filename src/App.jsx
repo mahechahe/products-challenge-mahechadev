@@ -9,7 +9,7 @@ export function App() {
     <Provider store={store}>
       <BrowserRouter>
         <RouterComponent />
-        <Toaster />
+        <Toaster position="bottom-right" reverseOrder={false} />
       </BrowserRouter>
     </Provider>
   );

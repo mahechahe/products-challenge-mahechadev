@@ -1,19 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   itemsCart: [],
-  favorites: [1],
+  favorites: [],
 };
 
 const initSlice = createSlice({
-  name: "init",
+  name: 'init',
   initialState,
   reducers: {
-    addItemToCart: (state, action) => {
-      state.itemsCart = [...state.itemsCart, action.payload];
+    setAddItemToCart: (state, action) => {
+      const newItems = [...state.itemsCart, action.payload];
+      state.itemsCart = newItems;
+      localStorage.setItem('productsCart', JSON.stringify(newItems));
     },
-    addItemToFavorites: (state, action) => {
-      state.favorites = [...state.favorites, action.payload];
+    setAddItemsCartByLocal: (state, action) => {
+      state.itemsCart = action.payload;
+    },
+    setRemoteItemToCart: (state, action) => {
+      const filterFav = state.itemsCart.filter((id) => id !== action.payload);
+      const newItems = filterFav;
+      state.itemsCart = newItems;
+      localStorage.setItem('productsCart', JSON.stringify(newItems));
+    },
+    setAddItemToFavorites: (state, action) => {
+      const newItems = [...state.favorites, action.payload];
+      state.favorites = newItems;
+      localStorage.setItem('favorites', JSON.stringify(newItems));
+    },
+    setAddItemsFavoriteByLocal: (state, action) => {
+      state.favorites = action.payload;
+    },
+    setRemoteItemToFavorites: (state, action) => {
+      const filterFav = state.favorites.filter((id) => id !== action.payload);
+      const newItems = filterFav;
+      state.favorites = newItems;
+      localStorage.setItem('favorites', JSON.stringify(newItems));
     },
     resetInitSlice: () => {
       return initialState;
@@ -21,7 +43,14 @@ const initSlice = createSlice({
   },
 });
 
-export const { addItemToCart, addItemToFavorites, resetInitSlice } =
-  initSlice.actions;
+export const {
+  setAddItemToCart,
+  setAddItemsCartByLocal,
+  setRemoteItemToCart,
+  setAddItemToFavorites,
+  setAddItemsFavoriteByLocal,
+  setRemoteItemToFavorites,
+  resetInitSlice,
+} = initSlice.actions;
 
 export default initSlice.reducer;
