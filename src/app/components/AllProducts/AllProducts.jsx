@@ -12,7 +12,7 @@ import { ItemProduct } from './ItemProduct';
 import CustomButton from '../CustomButton/CustomButton';
 import { products } from '../../../draft';
 
-function AllProducts() {
+function AllProducts({ handleOpenModal }) {
   /* Config */
   const dispatch = useDispatch();
 
@@ -61,7 +61,10 @@ function AllProducts() {
             </h2>
 
             <div className="w-[300px]">
-              <CustomButton label="Pagar con tarjeta de crédito" />
+              <CustomButton
+                label="Pagar con tarjeta de crédito"
+                onClick={handleOpenModal}
+              />
             </div>
           </div>
 
