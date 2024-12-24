@@ -90,6 +90,7 @@ function ModalAddCard({ handleCloseModal, handleOpenModalToCheckout }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: INIT_DATA_CARD,
@@ -146,9 +147,26 @@ function ModalAddCard({ handleCloseModal, handleOpenModalToCheckout }) {
     }
   };
 
+  const findDataUser = () => {
+    const getDataLocal = localStorage.getItem('clientDetail');
+
+    if (!getDataLocal) {
+      return;
+    }
+
+    const parseData = JSON.parse(getDataLocal);
+    setValue('adressClient', parseData.adressClient);
+    setValue('cityClient', parseData.cityClient);
+    setValue('emailClient', parseData.emailClient);
+    setValue('identificationClient', parseData.identificationClient);
+    setValue('phoneClient', parseData.phoneClient);
+    setValue('nameCard', parseData.nameClient);
+  };
+
   /* useEffect */
   useEffect(() => {
     getTratamientoWompi();
+    findDataUser();
   }, []);
 
   return (
