@@ -21,7 +21,7 @@ export function ItemProduct({
   const isFavoriteItem = favorites.includes(product.id);
 
   return (
-    <div className="relative ">
+    <div className="relative h-auto">
       {/* Favorite icon */}
       {isFavoriteItem && (
         <div className="w-[40px] h-[40px] absolute top-0 right-0 flex justify-center items-center">
@@ -44,33 +44,31 @@ export function ItemProduct({
           maxWidth: '100%',
         }}
       />
-      <div className="mt-4 flex flex-col justify-between h-[180px]">
-        <div className="h-[100px] ">
-          <h3
-            className="text-gray-700 font-semibold"
-            style={{
-              fontSize: '18px',
-              marginBottom: '4px',
-            }}
-          >
-            {product.name}
-          </h3>
+      <div className="mt-4 flex flex-col justify-start min-h-[150px] h-auto gap-y-2">
+        <h3
+          className="text-gray-700 font-semibold"
+          style={{
+            fontSize: '18px',
+          }}
+        >
+          {product.name}
+        </h3>
+        <div className="h-[100px] overflow-y-scroll scroll-container ">
           <p
-            className="mt-1 text-gray-500 h-[80px] "
+            className="text-gray-500 "
             style={{
               lineHeight: '1.6',
               fontSize: '15px',
               textOverflow: 'ellipsis',
-              overflow: 'hidden', // Esconde el desbordamiento
             }}
           >
             {product.desc}
           </p>
         </div>
 
-        <div className="justify-between w-full flex items-center">
+        <div className="justify-between w-full flex flex-wrap sm:flex-col items-center sm:items-start ">
           <p
-            className="text-lg font-bold text-gray-900 mt-2"
+            className="text-lg font-bold text-gray-900"
             style={{
               fontSize: '16px',
             }}
@@ -78,7 +76,7 @@ export function ItemProduct({
             {onFormatCurrencyColombian(product.price)}
           </p>
           <p
-            className="text-lg text-gray-900 mt-2"
+            className="text-lg text-gray-900"
             style={{
               fontSize: '16px',
             }}
@@ -87,9 +85,9 @@ export function ItemProduct({
             stock
           </p>
         </div>
-        <div className="mt-3">
-          <Rating name="read-only" value={1} readOnly size="medium" />
-        </div>
+      </div>
+      <div className="h-[20px]">
+        <Rating name="read-only" value={1} readOnly size="medium" />
       </div>
       <div className="flex justify-between items-center gap-x-5 mt-5">
         {isSelectedItem ? (

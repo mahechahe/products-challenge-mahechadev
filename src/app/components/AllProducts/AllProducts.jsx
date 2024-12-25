@@ -1,6 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProducts } from '@/app/routes/Products/service/productService';
 import {
   setAddItemsCartByLocal,
   setAddItemsFavoriteByLocal,
@@ -8,9 +9,8 @@ import {
   setAddItemToFavorites,
   setRemoteItemToFavorites,
 } from '../../store/initSlice/initSLice';
-import { ItemProduct } from './ItemProduct';
 import CustomButton from '../CustomButton/CustomButton';
-import { getAllProducts } from '@/app/routes/Products/service/productService';
+import { ItemProduct } from './ItemProduct';
 
 function AllProducts({ handleOpenModal }) {
   /* Config */
@@ -64,7 +64,7 @@ function AllProducts({ handleOpenModal }) {
     <div className="w-full overflow-hidden px-16 mt-16 h-auto mb-40">
       <div className="bg-white">
         <div className="w-full">
-          <div className="w-full flex justify-between items-center">
+          <div className="w-full flex justify-between md:flex-row flex-col items-start md:items-center gap-y-2">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">
               NUESTROS PRODUCTOS
             </h2>
@@ -78,7 +78,7 @@ function AllProducts({ handleOpenModal }) {
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-12 sm:grid-cols-2 lg:grid-cols-5 xl:gap-x-6">
+          <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-5">
             {products.map((product) => (
               <ItemProduct
                 key={product.id}
