@@ -1,5 +1,5 @@
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import {
   setAddItemsCartByLocal,
@@ -10,11 +10,15 @@ import {
 } from '../../store/initSlice/initSLice';
 import { ItemProduct } from './ItemProduct';
 import CustomButton from '../CustomButton/CustomButton';
-import { products } from '../../../draft';
+import { getAllProducts } from '@/app/routes/Products/service/productService';
 
 function AllProducts({ handleOpenModal }) {
   /* Config */
   const dispatch = useDispatch();
+
+  /* States */
+  const itemsCart = useSelector((state) => state.init.itemsCart);
+  const products = useSelector((state) => state.init.products);
 
   /* Functions */
   const addNewProduct = (newProd) => {
@@ -45,10 +49,15 @@ function AllProducts({ handleOpenModal }) {
     }
   };
 
+  const fetchData = async () => {
+    await dispatch(getAllProducts());
+  };
+
   /* useEffect */
 
   useEffect(() => {
     findDataLocal();
+    fetchData();
   }, []);
 
   return (
@@ -64,6 +73,7 @@ function AllProducts({ handleOpenModal }) {
               <CustomButton
                 label="Pagar con tarjeta de crédito"
                 onClick={handleOpenModal}
+                disabled={itemsCart.length === 0}
               />
             </div>
           </div>

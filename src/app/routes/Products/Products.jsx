@@ -10,6 +10,9 @@ import ModalCheckout from './components/ModalCheckout';
 
 const TYPES_MODAL = {
   VIEW_SHOPPING_CART: 'VIEW_SHOPPING_CART',
+  PAYMENT_SUCCESS: 'PAYMENT_SUCCESS',
+  PAYMENT_ERROR: 'PAYMENT_ERROR',
+  PAYMENT_PENDING: 'PAYMENT_PENDING',
   CHECKOUT_DETAIL: 'CHECKOUT_DETAIL',
   DATA_PAYMENT: 'DATA_PAYMENT',
 };
@@ -67,7 +70,10 @@ function Products() {
               />
             )}
             {modal.type === TYPES_MODAL.CHECKOUT_DETAIL && (
-              <ModalCheckout handleCloseModal={handleCloseModal} />
+              <ModalCheckout
+                handleCloseModal={handleCloseModal}
+                TYPES_MODAL={TYPES_MODAL}
+              />
             )}
           </div>
         </>
@@ -81,7 +87,12 @@ function Products() {
       >
         <>
           {modal.type === TYPES_MODAL.VIEW_SHOPPING_CART && (
-            <DrawerShoppingCart handleCloseModal={handleCloseModal} />
+            <DrawerShoppingCart
+              handleCloseModal={handleCloseModal}
+              handleOpenModalToAddCard={() =>
+                handleOpenModal(TYPES_MODAL.DATA_PAYMENT)
+              }
+            />
           )}
         </>
       </SwipeableDrawer>

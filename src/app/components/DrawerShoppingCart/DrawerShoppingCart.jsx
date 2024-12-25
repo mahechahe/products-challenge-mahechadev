@@ -4,17 +4,17 @@ import { IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { products } from '../../../draft';
 import { onFormatCurrencyColombian } from '../../utils/handleNumbers';
 import CustomButton from '../CustomButton/CustomButton';
 import { setRemoteItemToCart } from '../../store/initSlice/initSLice';
 
-function DrawerShoppingCart({ handleCloseModal }) {
+function DrawerShoppingCart({ handleCloseModal, handleOpenModalToAddCard }) {
   /* Config */
   const dispatch = useDispatch();
 
   /* Selectores */
   const itemsCart = useSelector((state) => state.init.itemsCart);
+  const products = useSelector((state) => state.init.products);
 
   /* States */
   const [productsSelected, setProductsSelected] = useState([]);
@@ -125,7 +125,7 @@ function DrawerShoppingCart({ handleCloseModal }) {
                     <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <img
                         alt={product.imageAlt}
-                        src={`/public/images/${product.imageSrc}`}
+                        src={`/images/${product.imageSrc}`}
                         className="size-full object-cover"
                       />
                     </div>
@@ -182,6 +182,7 @@ function DrawerShoppingCart({ handleCloseModal }) {
             <CustomButton
               label="Pagar con tarjeta de crédito"
               disabled={priceToPay === 0 || productsSelected.length === 0}
+              onClick={handleOpenModalToAddCard}
             />
           </div>
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">

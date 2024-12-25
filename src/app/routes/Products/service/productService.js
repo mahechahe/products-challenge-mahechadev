@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { constants } from '@/app/utils/apiConstants';
+import { setAddProducts } from '@/app/store/initSlice/initSLice';
 
 export const saveTokenCardService = (body) => async () => {
   try {
@@ -91,6 +92,60 @@ export const createPaymentService = (body) => async () => {
   try {
     const URL = `${constants.BASE_URL}/create-payment`;
     const res = await axios.post(URL, body);
+
+    if (res.status === 201) {
+      const convertData = res.data;
+      return {
+        status: true,
+        data: {
+          idTransaction: convertData.wompiTransactionId,
+        },
+      };
+    }
+
+    return {
+      status: false,
+      data: null,
+    };
+  } catch (error) {
+    console.log('*** REDUX -> createPaymentService ***', error);
+    return {
+      status: false,
+      data: null,
+    };
+  }
+};
+
+export const getAllProducts = () => async (dispatch) => {
+  try {
+    const URL = `${constants.BASE_URL}/products`;
+    const res = await axios.get(URL);
+
+    if (res.status === 200) {
+      dispatch(setAddProducts(res.data));
+      return {
+        status: true,
+        data: res.data,
+      };
+    }
+
+    return {
+      status: false,
+      data: null,
+    };
+  } catch (error) {
+    console.log('*** REDUX -> getAllProducts ***', error);
+    return {
+      status: false,
+      data: null,
+    };
+  }
+};
+
+export const validateStatusTransaction = (idTran) => async () => {
+  try {
+    const URL = `${constants.BASE_URL}/transaction/${idTran}`;
+    const res = await axios.get(URL);
     console.log('res', res);
 
     if (res.status === 201) {
