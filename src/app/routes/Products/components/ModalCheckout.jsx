@@ -4,20 +4,22 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { products } from '@/draft';
 import { onFormatCurrencyColombian } from '@/app/utils/handleNumbers';
 import CustomButton from '@/app/components/CustomButton/CustomButton';
 import {
   createPaymentService,
   createTransactionService,
+  validateStatusTransaction,
 } from '../service/productService';
+import { setAddItemsCartByLocal } from '@/app/store/initSlice/initSLice';
 
-function ModalCheckout({ handleCloseModal }) {
+function ModalCheckout({ handleCloseModal, TYPES_MODAL }) {
   /* Config */
   const dispatch = useDispatch();
 
   /* Selectores */
   const itemsCart = useSelector((state) => state.init.itemsCart);
+  const products = useSelector((state) => state.init.products);
 
   /* States */
   const [productsSelected, setProductsSelected] = useState([]);
@@ -120,11 +122,17 @@ function ModalCheckout({ handleCloseModal }) {
 
     const resIntWompi = await dispatch(createPaymentService(bodyPaymentWompi));
     if (resIntWompi.status) {
+      setTimeout(async () => {
+        const resValidateTran = await dispatch(
+          validateStatusTransaction(resIntWompi.data.idTransaction),
+        );
+      }, 3000);
       toast.success(
         'El pago está siendo procesado. Te enviaremos un correo cuando se haya confirmado',
       );
 
       localStorage.removeItem('productsCart');
+      dispatch(setAddItemsCartByLocal([]));
       handleCloseModal();
     } else {
       toast.error('Ha ocurrido un error al procesar el pago');
@@ -166,7 +174,7 @@ function ModalCheckout({ handleCloseModal }) {
                   <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
                       alt={product.imageAlt}
-                      src={`/public/images/${product.imageSrc}`}
+                      src={`/images/${product.imageSrc}`}
                       className="size-full object-cover"
                     />
                   </div>

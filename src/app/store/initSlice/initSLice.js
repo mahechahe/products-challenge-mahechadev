@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   itemsCart: [],
+  products: [],
   favorites: [],
 };
 
@@ -37,6 +38,9 @@ const initSlice = createSlice({
       state.favorites = newItems;
       localStorage.setItem('favorites', JSON.stringify(newItems));
     },
+    setAddProducts: (state, action) => {
+      state.products = action.payload;
+    },
     resetInitSlice: () => {
       return initialState;
     },
@@ -51,6 +55,7 @@ export const {
   setAddItemsFavoriteByLocal,
   setRemoteItemToFavorites,
   resetInitSlice,
+  setAddProducts,
 } = initSlice.actions;
 
 export default initSlice.reducer;

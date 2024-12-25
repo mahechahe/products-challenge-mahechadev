@@ -36,7 +36,7 @@ export function ItemProduct({
       {/* Imagen de producto */}
       <img
         alt={product.imageAlt}
-        src={`/public/images/${product.imageSrc}`}
+        src={`/images/${product.imageSrc}`}
         className="aspect-square w-full rounded-md bg-gray-200 lg:aspect-auto lg:h-[250px]"
         style={{
           objectFit: 'cover',
