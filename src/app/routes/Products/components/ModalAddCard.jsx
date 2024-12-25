@@ -170,9 +170,9 @@ function ModalAddCard({ handleCloseModal, handleOpenModalToCheckout }) {
   }, []);
 
   return (
-    <div className="w-full px-4 md:w-[40%] min-h-[60%] py-2 h-auto">
+    <div className="w-full px-4 sm:w-[80%] md:w-[60%] lg:[40%] min-h-[60%] py-2 h-auto ">
       <form
-        className="w-full h-full pb-1 bg-white rounded-lg shadow-lg relative overflow-hidden"
+        className="w-full h-full pb-1 bg-white rounded-lg shadow-lg relative overflow-hidden overflow-y-scroll scroll-container"
         onSubmit={onSubmit}
       >
         <div className="md:px-6 px-3 py-4 flex flex-col justify-start">
@@ -269,8 +269,8 @@ function ModalAddCard({ handleCloseModal, handleOpenModalToCheckout }) {
             </h3>
           </div>
 
-          <div className="w-full mt-3 flex justify-between gap-x-3">
-            <div className="flex flex-col w-[50%]">
+          <div className="w-full mt-3 flex md:flex-row flex-col gap-y-5 justify-between gap-x-3">
+            <div className="flex flex-col w-full md:w-[50%]">
               <label
                 htmlFor="identificationClient"
                 className="text-sm text-gray-800"
@@ -289,7 +289,7 @@ function ModalAddCard({ handleCloseModal, handleOpenModalToCheckout }) {
               />
             </div>
 
-            <div className="flex flex-col w-[50%]">
+            <div className="flex flex-col w-full md:w-[50%]">
               <label htmlFor="phoneClient" className="text-sm text-gray-800">
                 Número telefónico
               </label>
@@ -306,8 +306,8 @@ function ModalAddCard({ handleCloseModal, handleOpenModalToCheckout }) {
             </div>
           </div>
 
-          <div className="w-full mt-5 flex justify-between gap-x-3">
-            <div className="flex flex-col w-[50%]">
+          <div className="w-full mt-5 flex md:flex-row flex-col gap-y-5 justify-between gap-x-3">
+            <div className="flex flex-col w-full md:w-[50%]">
               <label htmlFor="emailClient" className="text-sm text-gray-800">
                 Correo electrónico
               </label>
@@ -323,7 +323,7 @@ function ModalAddCard({ handleCloseModal, handleOpenModalToCheckout }) {
               />
             </div>
 
-            <div className="flex flex-col w-[50%]">
+            <div className="flex flex-col w-full md:w-[50%]">
               <label htmlFor="cityClient" className="text-sm text-gray-800">
                 Ciudad de envío
               </label>
@@ -357,7 +357,7 @@ function ModalAddCard({ handleCloseModal, handleOpenModalToCheckout }) {
           </div>
 
           {/* Button */}
-          <div className="w-[300px] mt-8">
+          <div className="md:w-[300px] w-full mt-8">
             <CustomButton
               label={
                 loading ? 'Procesando tarjeta..' : 'Ir al resumen del pago'
