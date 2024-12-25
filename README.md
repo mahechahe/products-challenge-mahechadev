@@ -5,8 +5,7 @@ MahechadevScooters es una tienda en línea especializada en productos relacionad
 
 Este proyecto está construido con **React 18** y utiliza **Vite.js** como empaquetador, lo que permite una experiencia de desarrollo rápida y eficiente. El **frontend** está desplegado en **AWS Amplify**, lo que facilita la integración continua y el despliegue automático de las actualizaciones en la aplicación.
 
-
-[APP](https://main.d2shh7t3cvaq17.amplifyapp.com/)
+La url de la aplicacion es este: https://main.d2shh7t3cvaq17.amplifyapp.com/
 
 [APP](https://main.d2shh7t3cvaq17.amplifyapp.com/)
 
